@@ -1,5 +1,5 @@
 # chartadm
-K8S Helm Charts administration tool
+K8S Helm Charts Lifecycle Management tool
 
 _This project is in early alpha stage_
 
