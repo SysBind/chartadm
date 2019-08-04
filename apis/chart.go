@@ -1,5 +1,6 @@
 package apis
 
 type Chart struct {
-	Name string
+	Name string `hcl:"name,label"`
+	Repo Repo   `hcl:"repo,block"`
 }

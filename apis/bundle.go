@@ -42,6 +42,7 @@ func ParseBundle(hclText string) (*Bundle, error) {
 		fmt.Printf("Bundle %d: %s\n", i, bundle.Name)
 		for j, release := range bundle.Releases {
 			fmt.Printf("\tRelease %d: %s\n", j, release.Name)
+			fmt.Printf("\t %s/%s\n", release.Chart.Repo.URL, release.Chart.Name)
 		}
 	}
 
