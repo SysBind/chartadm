@@ -19,12 +19,13 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"github.com/sysbind/chartadm/apis"
+	"github.com/sysbind/chartadm/helm"
 )
 
-// planCmd represents the plan command
-var planCmd = &cobra.Command{
-	Use:   "plan",
-	Short: "create helm charts upgrade/install plan",
+// downloadCmd represents the download command
+var downloadCmd = &cobra.Command{
+	Use:   "download",
+	Short: "Download charts and images",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
 
@@ -32,21 +33,22 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		apis.ParseConfig()
-		fmt.Println("parsed config")
+		fmt.Println("download called")
+		client := helm.CLI{}
+		client.Fetch(apis.Chart{})
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(planCmd)
+	rootCmd.AddCommand(downloadCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// planCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// downloadCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// planCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// downloadCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

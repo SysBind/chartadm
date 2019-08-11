@@ -20,7 +20,7 @@ type Config struct {
 
 // Type definitions from above ommitted for brevity
 
-func ParseBundle(hclText string) (*Bundle, error) {
+func ParseConfig() (*Config, error) {
 	c := Config{}
 
 	parser := hclparse.NewParser()
@@ -29,12 +29,14 @@ func ParseBundle(hclText string) (*Bundle, error) {
 
 	if diags.HasErrors() {
 		fmt.Println("diags has errors (parse)")
+		return nil, fmt.Errorf("DecodeBody failed", f)
 	}
 	wr := hcl.NewDiagnosticTextWriter(os.Stdout, parser.Files(), 78, true)
 	wr.WriteDiagnostics(diags)
 	diags = gohcl.DecodeBody(f.Body, nil, &c)
 	if diags.HasErrors() {
 		fmt.Println("diags has errors (decode)")
+		return nil, fmt.Errorf("DecodeBody failed", f)
 	}
 	wr.WriteDiagnostics(diags)
 
@@ -46,5 +48,5 @@ func ParseBundle(hclText string) (*Bundle, error) {
 		}
 	}
 
-	return nil, nil
+	return &c, nil
 }
