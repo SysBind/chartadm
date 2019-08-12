@@ -9,7 +9,7 @@ type CLI struct {
 	Config apis.ChartAdmConfig
 }
 
-func init() {
+func Init(executable string) {
 	fmt.Println("helm.cli init..")
 
 }

@@ -34,11 +34,15 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		apis.SetDefaults(&chartAdmConfig)
-		log.Println("Calling: binary.Download")
-		err := binary.Download(chartAdmConfig)
+		// Download helm itself to the cachedir
+		/*binary*/
+		_, err := binary.Download(chartAdmConfig)
 		if err != nil {
 			log.Fatal(err)
 		}
+
+		// Init helm if neccesary
+
 	},
 }
 

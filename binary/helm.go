@@ -28,20 +28,28 @@ import (
 	"time"
 )
 
-func Download(config apis.ChartAdmConfig) error {
+func Download(config apis.ChartAdmConfig) (string, error) {
 	locationDir := filepath.Join(config.CacheDir, "helm", config.Version)
+
 	if err := os.MkdirAll(locationDir, 0755); err != nil {
-		return fmt.Errorf("unable to create cache directory: %s", err)
+		return "", fmt.Errorf("unable to create cache directory: %s", err)
 	}
+
 	url := fmt.Sprintf("%s/%s", config.ReleaseURL, releaseFile(config.Version))
 	archive := fmt.Sprintf("%s/%s", locationDir, releaseFile(config.Version))
-	if _, err := os.Stat(archive); err == nil {
-		log.Printf("skipping download, helm found in cache: %s", archive)
-		return nil
+	helmBinary := fmt.Sprintf("%s/helm", locationDir)
+
+	if _, err := os.Stat(helmBinary); err == nil {
+		log.Printf("skipping download, helm found in cache: %s", helmBinary)
+		return helmBinary, nil
 	}
 	get(url, archive)
-	extract(archive, locationDir)
-	return nil
+	extract(locationDir, archive)
+	if err := os.Remove(archive); err != nil {
+		log.Printf("could not remove %s: %s", archive, err)
+	}
+
+	return helmBinary, nil
 }
 
 func releaseFile(version string) string {
