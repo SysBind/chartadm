@@ -14,10 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package main
+package constants
 
-import "github.com/sysbind/chartadm/cmd"
+import "time"
 
-func main() {
-	cmd.Execute()
-}
+// Command-line flag defaults
+const (
+	ReleaseURL                    = "https://get.helm.sh"
+	DefaultVersion                = "2.14.3"
+	DefaultInstallDir             = "/opt/bin/"
+	DefaultDownloadConnectTimeout = 10 * time.Second
+)

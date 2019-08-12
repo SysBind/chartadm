@@ -6,11 +6,12 @@ import (
 )
 
 type CLI struct {
-	executable string
+	Config apis.ChartAdmConfig
 }
 
 func init() {
 	fmt.Println("helm.cli init..")
+
 }
 
 func (client *CLI) Fetch(chart apis.Chart) {

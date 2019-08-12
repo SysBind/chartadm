@@ -19,7 +19,7 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"github.com/sysbind/chartadm/apis"
-	"github.com/sysbind/chartadm/helm"
+	"github.com/sysbind/chartadm/binary"
 )
 
 // downloadCmd represents the download command
@@ -33,9 +33,8 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("download called")
-		client := helm.CLI{}
-		client.Fetch(apis.Chart{})
+		apis.SetDefaults(&chartAdmConfig)
+		binary.Download(chartAdmConfig)
 	},
 }
 

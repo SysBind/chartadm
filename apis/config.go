@@ -14,10 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package main
+package apis
 
-import "github.com/sysbind/chartadm/cmd"
+import (
+	"github.com/sysbind/chartadm/constants"
+)
 
-func main() {
-	cmd.Execute()
+// ChartAdmConfig holds chartadm global configuration
+type ChartAdmConfig struct {
+	Version    string
+	ReleaseURL string
+}
+
+// SetDefaults sets configuration values defined at build time
+func SetDefaults(cfg *ChartAdmConfig) {
+	cfg.Version = constants.DefaultVersion
+	cfg.ReleaseURL = constants.ReleaseURL
 }
