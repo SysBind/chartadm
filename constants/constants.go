@@ -24,4 +24,5 @@ const (
 	DefaultVersion                = "2.14.3"
 	DefaultInstallDir             = "/opt/bin/"
 	DefaultDownloadConnectTimeout = 10 * time.Second
+	DefaultCacheBaseDir           = "/var/cache/chartadm"
 )

@@ -24,10 +24,12 @@ import (
 type ChartAdmConfig struct {
 	Version    string
 	ReleaseURL string
+	CacheDir   string
 }
 
 // SetDefaults sets configuration values defined at build time
 func SetDefaults(cfg *ChartAdmConfig) {
 	cfg.Version = constants.DefaultVersion
 	cfg.ReleaseURL = constants.ReleaseURL
+	cfg.CacheDir = constants.DefaultCacheBaseDir
 }

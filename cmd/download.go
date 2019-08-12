@@ -16,10 +16,10 @@ limitations under the License.
 package cmd
 
 import (
-	"fmt"
 	"github.com/spf13/cobra"
 	"github.com/sysbind/chartadm/apis"
 	"github.com/sysbind/chartadm/binary"
+	"log"
 )
 
 // downloadCmd represents the download command
@@ -34,7 +34,11 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		apis.SetDefaults(&chartAdmConfig)
-		binary.Download(chartAdmConfig)
+		log.Println("Calling: binary.Download")
+		err := binary.Download(chartAdmConfig)
+		if err != nil {
+			log.Fatal(err)
+		}
 	},
 }
 
