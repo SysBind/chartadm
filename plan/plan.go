@@ -1,22 +1,33 @@
 package plan
 
 import (
-	//	"encoding/gob"
+	"fmt"
 	"github.com/sysbind/chartadm/apis"
-	//	"os"
 )
 
 type Operation int
 
 const (
-	install Operation = iota
-	upgrade
-	delete
+	Install Operation = iota
+	Upgrade
+	Delete
 )
 
 type Step struct {
-	release apis.Release
-	op      Operation
+	Release apis.Release
+	Op      Operation
+}
+
+func (op Operation) str() string {
+	switch op {
+	case Install:
+		return "install"
+	case Upgrade:
+		return "upgrade"
+	case Delete:
+		return "delete"
+	}
+	return ""
 }
 
 type Plan struct {
@@ -24,6 +35,7 @@ type Plan struct {
 }
 
 func (plan *Plan) Dump() {
-	//enc := gob.NewEncoder(os.Stdout)
-	//enc.Encode(plan)
+	for _, step := range plan.steps {
+		fmt.Printf("step: %s - %s\n", step.Release.Name, step.Op.str())
+	}
 }

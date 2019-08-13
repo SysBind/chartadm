@@ -9,12 +9,15 @@ import (
 // Calculate the plan according to desired and actual state
 func Calc(cfg *apis.Config) (Plan, error) {
 	log.Println("log.calculate: start")
+	var plan Plan
 	for i, bundle := range cfg.Bundles {
 		fmt.Printf("Bundle %d: %s\n", i, bundle.Name)
 		for j, release := range bundle.Releases {
+			step := Step{Release: release, Op: Install}
+			plan.steps = append(plan.steps, step)
 			fmt.Printf("\tRelease %d: %s\n", j, release.Name)
 			fmt.Printf("\t %s/%s\n", release.Chart.Repo.URL, release.Chart.Name)
 		}
 	}
-	return Plan{}, nil
+	return plan, nil
 }
