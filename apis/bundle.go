@@ -41,28 +41,21 @@ func ParseConfig() (*Config, error) {
 
 	parser := hclparse.NewParser()
 
-	f, diags := parser.ParseHCLFile("docs/sample.cfg")
+	f, diags := parser.ParseHCLFile("docs/config.hcl")
 
 	if diags.HasErrors() {
 		fmt.Println("diags has errors (parse)")
-		return nil, fmt.Errorf("DecodeBody failed", f)
+		return nil, fmt.Errorf("ParseHCLFile failed", f)
 	}
-	wr := hcl.NewDiagnosticTextWriter(os.Stdout, parser.Files(), 78, true)
-	wr.WriteDiagnostics(diags)
+	fmt.Println("bundle: Trying to decode")
+	wr := hcl.NewDiagnosticTextWriter(os.Stderr, parser.Files(), 78, true)
 	diags = gohcl.DecodeBody(f.Body, nil, &c)
 	if diags.HasErrors() {
+		wr.WriteDiagnostics(diags)
 		fmt.Println("diags has errors (decode)")
 		return nil, fmt.Errorf("DecodeBody failed", f)
 	}
 	wr.WriteDiagnostics(diags)
-
-	for i, bundle := range c.Bundles {
-		fmt.Printf("Bundle %d: %s\n", i, bundle.Name)
-		for j, release := range bundle.Releases {
-			fmt.Printf("\tRelease %d: %s\n", j, release.Name)
-			fmt.Printf("\t %s/%s\n", release.Chart.Repo.URL, release.Chart.Name)
-		}
-	}
 
 	return &c, nil
 }

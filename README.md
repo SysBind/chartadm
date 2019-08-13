@@ -31,4 +31,22 @@ Meant to be used alone or as a part of [Klusterkit](https://platform9.com/open-s
 go get -u github.com/sysbind/chartadm
 ```
 
-### Plan
+### Steps
+
+#### Init
+
+Generate initial config.hcl based on charts.
+not yet implemented, not curcial to main operation,
+config.hcl can be writeen manually([See Sample](docs/config.hcl))
+
+#### Plan
+
+Compare actual releases state in cluster with desired state as described in config.hcl
+Generate a plan
+
+#### Apply
+
+Exexcute the plan generated, install update and remove releases to reache desired state
+
+#### Destroy
+Destroy all releases
